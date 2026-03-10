@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
 var categoriesRouter = require('./routes/categories');
+var rolesRouter = require('./routes/roles'); // <-- THÊM MỚI DÒNG NÀY
 
 var app = express();
 
@@ -29,10 +30,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Đăng ký các Route
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/products', productsRouter); // Đã chuyển xuống dưới express.json()
+app.use('/users', usersRouter); // Route mặc định của Express lúc khởi tạo
+app.use('/products', productsRouter); 
 app.use('/api/v1/categories', categoriesRouter);
 app.use('/api/v1/products', productsRouter);
+
+// <-- THÊM MỚI 2 DÒNG NÀY (Đăng ký route chuẩn v1) -->
+app.use('/api/v1/roles', rolesRouter); 
+app.use('/api/v1/users', usersRouter); 
 
 // Kết nối MongoDB (Docker của bạn đang chạy ở cổng 27017)
 mongoose.connect('mongodb://localhost:27017/NNPTUD-S3');
